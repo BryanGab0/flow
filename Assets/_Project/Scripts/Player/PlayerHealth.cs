@@ -32,6 +32,15 @@ public class PlayerHealth : MonoBehaviour
         {
             return;
         }
+
+        if(Time.time - lastDamageTime < invulnerabilityTime)
+        {
+            return;
+        }
+        lastDamageTime = Time.time;
+
+        CurrentHealth = Mathf.Max(CurrentHealth - amount, 0);
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
     }
 
     void Start()
