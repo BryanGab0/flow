@@ -24,9 +24,21 @@ public class PlayerHealth : MonoBehaviour
     
     private void Awake()
     {
-        
+        CurrentHealth = maxHealth;
     }
 
+    void Start()
+    {
+        OnHealthChanged?.Invoke(CurrentHealth, maxHealth);
+    }
+
+    void Update()
+    {
+        if(!IsDead && transform.position.y < deathHeight)
+        {
+            Die();
+        }
+    }
     public void TakeDamage(int amount)
     {
         if(IsDead)
@@ -59,15 +71,5 @@ public class PlayerHealth : MonoBehaviour
         IsDead = true;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }
