@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 1403621466}
   - component: {fileID: 1403621465}
   - component: {fileID: 1403621467}
+  - component: {fileID: 1403621468}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -464,6 +465,29 @@ MonoBehaviour:
   maxHealth: 100
   invulnerabilityTime: 0.5
   deathHeight: -10
+--- !u!114 &1403621468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403621464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a4558f660e26541a3ed527dcd1bfbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  cameraPivot: {fileID: 370774563}
+  walkSpeed: 7
+  sprintSpeed: 10
+  groundAcceleration: 60
+  airAcceleration: 20
+  jumpHeight: 1.4
+  gravity: -25
+  coyoteTime: 0.12
+  jumpBufferTime: 0.13
+  mouseSensitivity: 0.1
+  maxLookAngle: 85
 --- !u!1 &1643306953
 GameObject:
   m_ObjectHideFlags: 0
