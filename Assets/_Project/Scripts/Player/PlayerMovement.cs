@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Lock(mouse);
+        Move(keyboard);
     }
 
     private void HandleCursor(Keyboard keyboard, Mouse mouse)
@@ -88,6 +89,76 @@ public class PlayerMovement : MonoBehaviour
         pitch = Mathf.Clamp(pitch - delta.y, -maxLookAngle, maxLookAngle);
 
         cameraPivot.localEulerAngles = new Vector3(pitch, 0f, 0f);
+    }
+
+    private void Move(Keyboard keyboard)
+    {
+        Vector2 input = Vector2.zero;
+
+        if(keyboard.wKey.isPressed) input.y += 1f;
+        if(keyboard.aKey.isPressed) input.x -= 1f;
+        if(keyboard.sKey.isPressed) input.y -= 1f;
+        if(keyboard.dKey.isPressed) input.x += 1f;
+
+        input = Vector2.ClampMagnitude(input,1f);
+
+        Vector3 wishDir = transform.right * input.x + transform.forward * input.y;
+
+        float targetSpeed = keyboard.leftShiftKey.isPressed ? sprintSpeed : walkSpeed;
+
+        Vector3 targetVelocity = wishDir * targetSpeed;
+
+        bool grounded = controller.isGrounded;
+
+        if (grounded)
+        {
+            lastGroundedTime = Time.time;
+        }
+
+        bool keepAirMomentum = !grounded && input == Vector2.zero;
+
+        if (!keepAirMomentum)
+        {
+            float accel = grounded ? groundAcceleration : airAcceleration;
+
+            horizontalVelocity = Vector3.MoveTowards(
+                horizontalVelocity,
+                targetVelocity,
+                accel * Time.deltaTime
+            );
+        }
+
+        if (keyboard.spaceKey.wasPressedThisFrame)
+        {
+            lastJumpPressedTime = Time.time;
+        }
+
+        if(grounded && verticalVelocity < 0f)
+        {
+            verticalVelocity = -2f;
+        }
+
+        bool canJump = Time.time - lastGroundedTime <= coyoteTime;
+        bool wantsJump = Time.time - lastJumpPressedTime <= jumpBufferTime;
+
+        if(canJump && wantsJump)
+        {
+            verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+            lastJumpPressedTime = -999f;
+            lastGroundedTime = -999f;
+        }
+
+        verticalVelocity += gravity * Time.deltaTime;
+
+        Vector3 velocity = horizontalVelocity + Vector3.up * verticalVelocity;
+
+        CollisionFlags flags = controller.Move(velocity * Time.deltaTime);
+
+        if((flags & CollisionFlags.Above) != 0 && verticalVelocity > 0f)
+        {
+            verticalVelocity = 0f;
+        }
     }
 
 }
