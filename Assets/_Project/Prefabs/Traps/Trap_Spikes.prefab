@@ -728,6 +728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5954949284676888786}
   - component: {fileID: 3626060826706668008}
+  - component: {fileID: 8114027996955296905}
   m_Layer: 0
   m_Name: Spears
   m_TagString: Untagged
@@ -771,10 +772,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83636228e213e564e9ff20062772e279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mover
-  direction: {x: 0, y: 3, z: 0}
-  distance: 2
-  speed: 2
-  startOffset: 0
+  direction: {x: 0, y: 1, z: 0}
+  distance: 2.7
+  speed: 1
+  startOffset: 2
+--- !u!114 &8114027996955296905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6250854750149855076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19c977cc93adcd241827a09cc9d6a5d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageZone
+  damage: 25
+  damageCooldown: 1
+  hitFxPrefab: {fileID: 0}
+  hitFxLifetime: 1.5
 --- !u!1 &6349290501866887653
 GameObject:
   m_ObjectHideFlags: 0
