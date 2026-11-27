@@ -43,7 +43,7 @@ public class DamageZone : MonoBehaviour
         nextDamageTime = Time.time + damageCooldown;
 
         // Log pra conferir no Console (o PlayerHealth do grupo não escreve nada).
-        Debug.Log($"{name} causou {damage} de dano. Vida: {health.CurrentHealth}/{health.MaxHealth}");
+        Debug.Log($"{name} causou {damage} de dano. HP: {health.CurrentHealth}/{health.MaxHealth}");
 
         if (hitFxPrefab != null)
         {

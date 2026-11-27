@@ -28,7 +28,7 @@ public class PlayerHUD : MonoBehaviour
 
     private void UpdateHealth(int current, int max)
     {
-        healthText.text = $"Vida: {current}";
+        healthText.text = $"HP: {current}";
         healthText.color = current <= max * 0.3f
             ? lowHealthColor
             : normalColor;
