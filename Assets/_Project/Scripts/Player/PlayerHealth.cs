@@ -70,6 +70,10 @@ public class PlayerHealth : MonoBehaviour
         
         IsDead = true;
 
+        // Avisa o GameManager (HUD de vidas) ANTES de recarregar a cena.
+        // O "if" mantém as cenas Dev, que não têm GameManager, funcionando como antes.
+        if (GameManager.Instance != null) GameManager.Instance.PerderVida();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

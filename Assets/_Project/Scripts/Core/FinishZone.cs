@@ -8,6 +8,7 @@ public class FinishZone : MonoBehaviour
 {
     [SerializeField] private string winMessage = "Você chegou ao fim!";
     [SerializeField] private float restartDelay = 4f;
+    [SerializeField] private int bonusChegada = 100; // pontos extras por terminar a fase
 
     private bool finished;
 
@@ -21,6 +22,9 @@ public class FinishZone : MonoBehaviour
         if (finished || !other.CompareTag("Player")) return;
 
         finished = true;
+
+        // Bônus de chegada no HUD de pontos (o "if" protege as cenas sem GameManager).
+        if (GameManager.Instance != null) GameManager.Instance.AdicionarPontos(bonusChegada);
 
         PlayerMovement movement = other.GetComponent<PlayerMovement>();
 
@@ -43,6 +47,11 @@ public class FinishZone : MonoBehaviour
     private IEnumerator RestartAfterDelay()
     {
         yield return new WaitForSeconds(restartDelay);
+
+        // Fase concluída: a próxima tentativa começa do zero (pontos e vidas).
+        // Sem isso, o GameManager (que sobrevive ao recarregamento) somaria as partidas.
+        if (GameManager.Instance != null) GameManager.Instance.ReiniciarPartida();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
